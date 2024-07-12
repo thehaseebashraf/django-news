@@ -5,7 +5,7 @@ from .models import CustomUser
 
 
 class CustomUserCreationForm(UserCreationForm):
-    is_admin = forms.BooleanField(required=False, label="Sign up as admin")  #new
+    is_admin = forms.BooleanField(required=False, label="Sign up as admin") 
     class Meta(UserCreationForm):
         model = CustomUser
         fields = (

@@ -111,6 +111,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -126,5 +127,17 @@ LOGOUT_REDIRECT_URL = "home"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"  
 CRISPY_TEMPLATE_PACK = "bootstrap5"  
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+#EMAIL_BACKEND = 'postmark.django_backend.EmailBackend'
+
+DEFAULT_FROM_EMAIL = "mashraf.bscs19seecs@seecs.edu.pk"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "hihaseebhere@gmail.com"
+EMAIL_HOST_PASSWORD = "833ba152-d8ee-49fc-94a7-3313333c89fa"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
+
 TIME_ZONE = "America/New_York" 

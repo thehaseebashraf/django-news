@@ -1,15 +1,25 @@
+{# Extend the base template for consistent layout #}
 {% extends "base.html" %}
+{# Load crispy forms template tags for enhanced form styling #}
 {% load crispy_forms_tags %}
+
+{# Set the title block for the sign-up page #}
 {% block title %}Sign Up{% endblock title %}
 
 {% block content %}
 <h2>Sign Up</h2>
-<form method="post">{% csrf_token %}
+{# Form to sign up a new user #}
+<form method="post">
+    {# CSRF token for security #}
+    {% csrf_token %}
+    {# Render the form with crispy forms for improved styling #}
     {{ form|crispy }}
-    <div class="form-check">
+    <!-- <div class="form-check">
+        {# Checkbox to sign up as an admin #}
         {{ form.is_admin }}
         <label class="form-check-label" for="id_is_admin">Sign up as admin</label>
-    </div>
+    </div> -->
+    {# Submit button to complete the sign-up process #}
     <button class="btn btn-success ml-2" type="submit">Sign Up</button>
 </form>
 {% endblock content %}

@@ -1,10 +1,15 @@
-{% extends "base.html" %} 
-{% block title %}Delete Article{% endblock title %} 
+{# Extend the base template for consistent layout #}
+{% extends "base.html" %}
+{% block title %}Delete Ticket{% endblock title %}
 
 {% block content %}
-<h1>Delete</h1>
-<form action="" method="post">{% csrf_token %}
+<h1>Delete Ticket</h1>
+{# Form to confirm deletion of the article #}
+<form action="" method="post">
+  {# CSRF token for security #}
+  {% csrf_token %}
   <p>Are you sure you want to delete "{{ article.title }}"?</p>
-  <button class="btn btn-danger ml-2" type="submit">Confirm</button>
+  {# Button to confirm deletion #}
+  <button class="btn btn-danger ml-2" type="submit">Confirm Delete</button>
 </form>
 {% endblock content %}

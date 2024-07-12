@@ -1,0 +1,96 @@
+/* Navbar customization */
+header {
+    background-color: #343a40; /* Darker background color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+  
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff; /* Blue text color */
+}
+  
+.navbar-brand:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
+  
+.nav-link {
+    font-size: 1.1rem;
+    color: #7d7d7d; /* Light gray */
+}
+  
+.nav-link:hover {
+    color: #007bff; /* Blue on hover */
+}
+  
+.dropdown-menu {
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+  
+.btn-outline-primary {
+    border-color: #0056b3; /* Darker blue border */
+    color: #0056b3; /* Darker blue text */
+}
+  
+.btn-outline-primary:hover {
+    background-color: #0056b3; /* Darker blue background on hover */
+    border-color: #0056b3;
+    color: #ffffff; /* White text on hover */
+}
+  
+.btn-primary {
+    background-color: #0056b3; /* Darker blue background */
+    border-color: #0056b3; /* Darker blue border */
+}
+  
+.btn-primary:hover {
+    background-color: #004085; /* Darker blue on hover */
+    border-color: #004085;
+}
+  
+/* General content styling */
+.container {
+    max-width: 960px;
+    margin-top: 20px;
+}
+  
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+  
+.nav-link-spacing {
+    margin-left: 30px;
+}
+  
+p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+  
+a {
+    color: #007bff; /* Blue links */
+    text-decoration: none;
+}
+  
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+  
+/* Responsive design */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+  
+    .nav-link {
+        font-size: 1rem;
+    }
+  
+    .btn {
+        font-size: 0.875rem;
+    }
+}

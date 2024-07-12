@@ -1,8 +1,11 @@
+{# Extend the base template for consistent layout #}
 {% extends "base.html" %}
-{% load crispy_forms_tags %} 
+{# Load crispy forms template tags for enhanced form styling #}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="article-entry">
+  {# Display the article title, author, and date #}
   <h2>{{ object.title }}</h2>
   <p>by {{ object.author }} | {{ object.date }}</p>
   <p>{{ object.body }}</p>
@@ -10,25 +13,27 @@
 
 <hr>
 <h4>Comments</h4>
+{# Loop through each comment for the article #}
 {% for comment in article.comment_set.all %}
   <p>{{ comment.author }} &middot; {{ comment }}</p>
 {% endfor %}
 <hr>
 
-
-<h4>Add a comment</h4>
-<form action="" method="post">{% csrf_token %}
+<h4>Add a Comment</h4>
+{# Form to add a new comment #}
+<form action="" method="post">
+  {# CSRF token for security #}
+  {% csrf_token %}
+  {# Render the form with crispy forms for improved styling #}
   {{ form|crispy }}
+  {# Submit button to save the new comment #}
   <button class="btn btn-success ms-2" type="submit">Save</button>
 </form>
 
-
 <div>
-    {% if user.is_authenticated and user.is_admin %} 
-  <p><a href="{% url 'article_edit' article.pk %}">Edit</a>
-    <a href="{% url 'article_delete' article.pk %}">Delete</a>
-  </p>
-  {% endif %}
-  <p>Back to <a href="{% url 'article_list' %}">All Articles</a>.</p>
+  {# Link to return to the list of all articles #}
+  <br>
+  
+  <p>Back to <a href="{% url 'article_list' %}">All Tickets</a></p>
 </div>
 {% endblock content %}

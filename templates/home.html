@@ -1,14 +1,35 @@
+{# Extends the base template for consistent layout #}
 {% extends "base.html" %}
 
+{# Define the title block for the home page #}
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-{% if user.is_authenticated %}
-Hi {{ user.username }}! You are {{ user.age }} years old.
-<p><a href="{% url 'logout' %}">Log Out</a></p>
-{% else %}
-<p>You are not logged in</p>
-<a href="{% url 'login' %}">Log In</a> |
-<a href="{% url 'signup' %}">Sign Up</a>
-{% endif %}
+<div class="container mt-4">
+  {# Conditional block to check if the user is logged in #}
+  {% if user.is_authenticated %}
+    {# Display a personalized welcome message for authenticated users #}
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Hello again, {{ user.username }}!</h4>
+      <p>We're glad to have you back.</p>
+      <hr>
+      <p class="mb-0">
+        {# Button linking to the article list page #}
+        <a class="btn btn-primary" href="{% url 'article_list' %}" role="button">Browse all tickets</a>
+      </p>
+    </div>
+  {% else %}
+    {# Display a message for visitors who are not logged in #}
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">Welcome to the Helpdesk Portal!</h4>
+      <p>Log in or register to make use of our services.</p>
+      <hr>
+      <!-- <p class="mb-0">
+        {# Buttons for logging in and signing up #}
+        <a class="btn btn-primary" href="{% url 'login' %}" role="button">Sign In</a>
+        <a class="btn btn-secondary" href="{% url 'signup' %}" role="button">Register</a>
+      </p> -->
+    </div>
+  {% endif %}
+</div>
 {% endblock content %}

@@ -1,36 +1,46 @@
+{# Extend the base template #}
 {% extends "base.html" %}
 
+{# Set the title block for the articles page #}
 {% block title %}Articles{% endblock title %}
 
 {% block content %}
+{# Loop through each article in the article_list #}
 {% for article in article_list %}
-<div class="card">
+<div class="card mb-3">
   <div class="card-header">
+    {# Display the article title as a link to the article's detail page #}
     <span class="fw-bold">
       <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
     </span> &middot;
-    <span class="text-muted">by {{ article.author }} |
-      {{ article.date }}</span>
+    {# Display the article's author and publication date #}
+    <span class="text-muted">by {{ article.author }} | {{ article.date }}</span>
   </div>
   <div class="card-body">
+    {# Display the article body #}
     <p>{{ article.body }}</p>
-    {% if user.is_authenticated and user.is_admin %} 
-      <a href="{% url 'article_edit' article.pk %}">Edit</a>
-      <a href="{% url 'article_delete' article.pk %}">Delete</a>
-    {% endif %} 
-    <a href="{{ article.get_absolute_url }}">New Comment</a> <!-- new -->
+    {# Button to edit the article #}
+    <a href="{% url 'article_edit' article.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+    {# Conditional rendering of the delete button for admin users #}
+    {% if user.is_authenticated and user.is_admin %}
+      <a href="{% url 'article_delete' article.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+    {% endif %}
+    {# Button to add a comment to the article #}
+    <a href="{{ article.get_absolute_url }}" class="btn btn-sm btn-primary">Add Comment</a>
   </div>
   <div class="card-footer">
+    <h5>Comments</h5>
+    {# Loop through each comment for the article #}
     {% for comment in article.comment_set.all %}
     <p>
-      <span class="fw-bold">
-        {{ comment.author }} &middot;
-      </span>
+      <span class="fw-bold">{{ comment.author }} &middot;</span>
       {{ comment }}
     </p>
+    {% empty %}
+    {# Message when there are no comments #}
+    <p>No comments yet.</p>
     {% endfor %}
   </div>
 </div>
-<br/>
 {% endfor %}
 {% endblock content %}
