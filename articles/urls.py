@@ -1,22 +1,21 @@
 # articles/urls.py
+
 from django.urls import path
-from .views import ArticleListView
 
-
+# Importing the necessary views from the current directory
 from .views import (
-    ArticleListView,
-    ArticleDetailView,
-    ArticleUpdateView,
-    ArticleDeleteView,
-    ArticleCreateView,
-   
+    TicketListView,
+    TicketDeleteView,
+    TicketDetailView,
+    TicketCreateView,
+    TicketUpdateView,
 )
 
+# Define the URL patterns for the 'articles' app
 urlpatterns = [
-    path("<int:pk>/", ArticleDetailView.as_view(), name="article_detail"),
-    path("<int:pk>/edit/", ArticleUpdateView.as_view(), name="article_edit"),
-    path("<int:pk>/delete/", ArticleDeleteView.as_view(), name="article_delete"),
-    path("new/", ArticleCreateView.as_view(), name="article_new"),
-    path("", ArticleListView.as_view(), name="article_list"),
-    
+    path("<int:pk>/", TicketDetailView.as_view(), name="article_detail"),  # URL pattern for viewing a specific article's details
+    path("<int:pk>/edit/", TicketUpdateView.as_view(), name="article_edit"),  # URL pattern for editing a specific article
+    path("<int:pk>/delete/", TicketDeleteView.as_view(), name="article_delete"),  # URL pattern for deleting a specific article
+    path("new/", TicketCreateView.as_view(), name="article_new"),  # URL pattern for creating a new article
+    path("", TicketListView.as_view(), name="article_list"),  # URL pattern for listing all articles
 ]
