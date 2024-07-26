@@ -26,13 +26,13 @@ Follow these steps to set up and run the project:
 
 ### 1. Run the following commands
 
-cd helpdesk
-python -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py runserver
+- cd helpdesk
+- python -m venv venv
+- source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+- pip install -r requirements.txt
+- python manage.py migrate
+- python manage.py createsuperuser
+- python manage.py runserver
 
 
 By default, the server will start at http://127.0.0.1:8000/.
