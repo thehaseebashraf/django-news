@@ -1,20 +1,20 @@
-{# Extend the base template #}
+<!-- Extend the base template -->
 {% extends "base.html" %}
-{# Load crispy forms template tags for better form styling #}
+<!-- Load crispy forms template tags for better form styling -->
 {% load crispy_forms_tags %}
 
-{# Set the title block for the new article page #}
+<!-- Set the title block for the new article page -->
 {% block title %}Create New Ticket{% endblock title %}
 
 {% block content %}
 <h1>Create a New Ticket</h1>
-{# Form to create a new ticket #}
-<form action="" method="post">
-  {# CSRF token for security #}
+<!-- Form to create a new ticket -->
+<form action="" method="post" enctype="multipart/form-data">
+  <!-- CSRF token for security -->
   {% csrf_token %}
-  {# Render the form with crispy forms for better styling #}
+  <!-- Render the form with crispy forms for better styling -->
   {{ form|crispy }}
-  {# Submit button to save the new ticket #}
+  <!-- Submit button to save the new ticket -->
   <button class="btn btn-success ml-2" type="submit">Save Ticket</button>
 </form>
 {% endblock content %}

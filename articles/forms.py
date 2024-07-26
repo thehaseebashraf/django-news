@@ -1,10 +1,23 @@
 from django import forms
-from .models import Comment
+from .models import Article, Comment
 
-# Define a form for the Comment model
-class CommentForm(forms.ModelForm):
-
-    # Meta class to specify the model and fields to include in the form
+# Define a form for the Article model (for creating and updating tickets)
+class TicketForm(forms.ModelForm):
     class Meta:
-        model = Comment  # Specify the model to use
-        fields = ("comment", "author")  # Specify the fields to include in the form
+        model = Article
+        fields = ['title', 'description', 'image']
+        labels = {
+            'title': 'Title',
+            'description': 'Description',
+            'image': 'Upload Image',
+        }
+
+# Define a form for the Comment model (for adding comments to articles)
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text'] 
+        widgets = {
+            'text': forms.TextInput(attrs={'placeholder': 'Add a comment'})  
+        }
+

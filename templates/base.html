@@ -18,16 +18,18 @@
 
 <body>
   <header class="p-3 mb-3 border-bottom bg-light">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+    <div class="container-fluid">
+      <div class="d-flex flex-wrap align-items-center justify-content-between">
         <!-- Brand logo linking to the home page -->
-        <a class="navbar-brand" href="{% url 'home' %}">Helpdesk</a>
+        <a class="navbar-brand" href="{% url 'home' %}">Helpline</a>
         <!-- Navigation menu -->
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <!-- Conditional rendering based on user authentication -->
           {% if user.is_authenticated %}
             <!-- Link to create a new ticket -->
-            <li><a href="{% url 'article_new' %}" class="nav-link px-2 nav-link-spacing">Create New Ticket</a></li>
+            {% if request.path != '/articles/new/' %}
+            <li><a href="{% url 'article_new' %}" class="btn btn-outline-primary nav-link-spacing">Create New Ticket</a></li>
+            {% endif %}        
         </ul>
         <div class="dropdown text-end">
           <!-- User account dropdown menu -->

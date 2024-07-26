@@ -17,24 +17,22 @@
     <span class="text-muted">by {{ article.author }} | {{ article.date }}</span>
   </div>
   <div class="card-body">
-    {# Display the article body #}
-    <p>{{ article.body }}</p>
-    {# Button to edit the article #}
-    <a href="{% url 'article_edit' article.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
-    {# Conditional rendering of the delete button for admin users #}
-    {% if user.is_authenticated and user.is_admin %}
-      <a href="{% url 'article_delete' article.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+    {# Display the article description #}
+    <p>{{ article.description }}</p>
+
+    {# Display the article image thumbnail if it exists #}
+    {% if article.image %}
+      <div class="mb-3">
+        <img src="{{ article.image.url }}" alt="Thumbnail" class="img-thumbnail" style="max-width: 100px; height: auto;">
+      </div>
     {% endif %}
-    {# Button to add a comment to the article #}
-    <a href="{{ article.get_absolute_url }}" class="btn btn-sm btn-primary">Add Comment</a>
   </div>
   <div class="card-footer">
-    <h5>Comments</h5>
     {# Loop through each comment for the article #}
     {% for comment in article.comment_set.all %}
     <p>
       <span class="fw-bold">{{ comment.author }} &middot;</span>
-      {{ comment }}
+      {{ comment.text }}
     </p>
     {% empty %}
     {# Message when there are no comments #}

@@ -1,11 +1,10 @@
-from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy, reverse
-from django.views.generic.detail import SingleObjectMixin
-from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Article
 from .mixins import AdminRequiredMixin
-from .forms import CommentForm
+from .forms import CommentForm, TicketForm
+from django.shortcuts import redirect
 from django.views import View
 
 # View for listing all tickets
@@ -13,8 +12,8 @@ class TicketListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = "ticket_list.html"
 
-# View for displaying ticket details and a comment form
-class CommentGet(DetailView):
+# View for displaying ticket details and handling comment form submissions
+class TicketDetailView(LoginRequiredMixin, DetailView):
     model = Article
     template_name = "ticket_detail.html"
 
@@ -23,43 +22,25 @@ class CommentGet(DetailView):
         context['form'] = CommentForm()  # Add the comment form to the context
         return context
 
-# View for handling comment form submissions
-class CommentPost(SingleObjectMixin, FormView):
-    model = Article
-    form_class = CommentForm
-    template_name = "ticket_detail.html"
-
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        return super().post(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        comment = form.save(commit=False)
-        comment.article = self.object  # Associate the comment with the article
-        comment.save()
-        return super().form_valid(form)
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.article = self.object
+            comment.author = request.user  # Set the author to the currently logged-in user
+            comment.save()
+            return redirect(self.get_success_url())
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
 
     def get_success_url(self):
-        article = self.get_object()
-        return reverse("article_detail", kwargs={"pk": article.pk})
-
-# View for handling ticket details and comments, combining GET and POST methods
-class TicketDetailView(LoginRequiredMixin, View):
-    def post(self, request, *args, **kwargs):
-        view = CommentPost.as_view()
-        return view(request, *args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        view = CommentGet.as_view()
-        return view(request, *args, **kwargs)
+        return reverse("article_detail", kwargs={"pk": self.object.pk})
 
 # View for updating tickets
 class TicketUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
-    fields = (
-        "title",
-        "body",
-    )
+    fields = ("title", "description")
     template_name = "ticket_edit.html"
 
 # View for deleting tickets, restricted to admins
@@ -71,11 +52,9 @@ class TicketDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView):
 # View for creating new tickets
 class TicketCreateView(LoginRequiredMixin, CreateView):
     model = Article
-    template_name = "ticket_new.html"
-    fields = (
-        "title",
-        "body",
-    )
+    form_class = TicketForm
+    template_name = 'ticket_new.html'
+    success_url = reverse_lazy('article_list')  # Redirect to the article list after creation
 
     def form_valid(self, form):
         form.instance.author = self.request.user  # Set the author to the current user

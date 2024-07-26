@@ -1,11 +1,15 @@
+# models.py
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
-# Article model to store articles
+
+
 class Article(models.Model):
     title = models.CharField(max_length=255)  # Title of the article
-    body = models.TextField()  # Body content of the article
+    description = models.TextField()  # Description content of the article
+    image = models.ImageField(upload_to='images/', blank=True, null=True)  # Image for the article
     date = models.DateTimeField(auto_now_add=True)  # Date and time when the article is created
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -20,16 +24,25 @@ class Article(models.Model):
 
 
 # Comment model to store comments on articles
+# class Comment(models.Model):
+#     article = models.ForeignKey('Article', on_delete=models.CASCADE)
+#     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Updated line
+#     text = models.TextField()
+#     created_at = models.DateTimeField(default=timezone.now) 
+
+#     def __str__(self):
+#         return self.comment  # String representation of the Comment model
+
+#     def get_absolute_url(self):
+#         return reverse("article_list")  # URL to redirect after submitting a comment
+
+
+
 class Comment(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)  # Each comment is related to a specific article
-    comment = models.CharField(max_length=140)  # The content of the comment
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,  # If the author is deleted, also delete their comments
-    )
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.TextField()  # Ensure this field exists
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.comment  # String representation of the Comment model
-
-    def get_absolute_url(self):
-        return reverse("article_list")  # URL to redirect after submitting a comment
+        return self.text  # Ensure this field exists and is correctly referenced
