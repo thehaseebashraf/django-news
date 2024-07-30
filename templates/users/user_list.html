@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}User List{% endblock %}
+
+{% block content %}
+<h2 class="my-4 text-center">User List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th class="text-center">Admin</th>
+            <th >Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td style="text-align: center;">
+                <input type="checkbox" class="admin-checkbox" data-username="{{ user.username }}" data-user-id="{{ user.id }}" {% if user.is_admin %}checked{% endif %}>
+            </td>
+            <td>
+                <a href="{% url 'user_delete' user.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ user.username }}?');">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal for confirmation of admin rights -->
+<div class="modal fade" id="adminConfirmModal" tabindex="-1" aria-labelledby="adminConfirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="adminConfirmModalLabel">Confirm Admin Rights</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to <span id="adminAction"></span> <span id="username"></span>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirmAdminButton">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.admin-checkbox');
+    const modal = new bootstrap.Modal(document.getElementById('adminConfirmModal'));
+    let selectedUserId = null;
+    let selectedUsername = null;
+    let isAdminAction = true;
+
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        selectedUserId = this.dataset.userId;
+        selectedUsername = this.dataset.username;
+        isAdminAction = this.checked;
+        document.getElementById('username').textContent = selectedUsername;
+        document.getElementById('adminAction').textContent = isAdminAction ? 'make' : 'remove admin rights for';
+        modal.show();
+      });
+    });
+
+    document.getElementById('confirmAdminButton').addEventListener('click', function() {
+      modal.hide();
+      fetch(`/accounts/users/${selectedUserId}/${isAdminAction ? 'make_admin' : 'remove_admin'}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}'
+        }
+      }).then(response => {
+        if (response.ok) {
+          location.reload();
+        } else {
+          // Handle error
+          alert('Failed to update admin rights');
+          document.querySelector(`.admin-checkbox[data-user-id="${selectedUserId}"]`).checked = !isAdminAction;
+        }
+      }).catch(() => {
+        // Handle error
+        alert('Failed to update admin rights');
+        document.querySelector(`.admin-checkbox[data-user-id="${selectedUserId}"]`).checked = !isAdminAction;
+      });
+    });
+  });
+</script>
+{% endblock %}

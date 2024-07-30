@@ -33,3 +33,18 @@
   {% endif %}
 </div>
 {% endblock content %}
+
+<!-- {% block extra_js %}
+<script>
+  // Ensure the script only runs if the user is authenticated
+  if ({{ user.is_authenticated|yesno:"true,false" }}) {
+    // Push a new state to the history stack
+    window.history.pushState(null, "", window.location.href);        
+    // Listen for the popstate event
+    window.onpopstate = function() {
+      // Push the same state to the history stack to prevent going back
+      window.history.pushState(null, "", window.location.href);
+    };
+  }
+</script>
+{% endblock %} -->

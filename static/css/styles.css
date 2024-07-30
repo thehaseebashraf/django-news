@@ -3,9 +3,7 @@ header {
     background-color: #343a40; /* Darker background color */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-  
 
-  
 .navbar-brand {
     font-size: 1.5rem;
     font-weight: bold;
@@ -95,4 +93,28 @@ a:hover {
     .btn {
         font-size: 0.875rem;
     }
+}
+
+
+
+.table {
+    margin-top: 20px;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.modal-title {
+    font-weight: bold;
 }

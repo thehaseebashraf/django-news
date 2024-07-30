@@ -11,7 +11,13 @@ from django.views import View
 class TicketListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = "ticket_list.html"
-
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ticket_count'] = Article.objects.count()
+        return context
+    
+    
 # View for displaying ticket details and handling comment form submissions
 class TicketDetailView(LoginRequiredMixin, DetailView):
     model = Article
