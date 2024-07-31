@@ -46,9 +46,20 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
 # View for updating tickets
 class TicketUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
-    fields = ("title", "description")
+    form_class = TicketForm
     template_name = "ticket_edit.html"
 
+    def form_valid(self, form):
+        # Handle image deletion if the checkbox is checked
+        if self.request.POST.get('delete_image'):
+            self.object.image.delete()
+        
+        # Save the form with the new image if uploaded
+        return super().form_valid(form)
+    
+    
+    
+    
 # View for deleting tickets, restricted to admins
 class TicketDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView):
     model = Article

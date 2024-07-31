@@ -97,24 +97,3 @@ a:hover {
 
 
 
-.table {
-    margin-top: 20px;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
-}
-
-.table th, .table td {
-    vertical-align: middle;
-}
-
-.modal-title {
-    font-weight: bold;
-}

@@ -5,7 +5,6 @@ from django.urls import reverse
 from django.utils import timezone
 
 
-
 class Article(models.Model):
     title = models.CharField(max_length=255)  # Title of the article
     description = models.TextField()  # Description content of the article
@@ -22,22 +21,6 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse("article_detail", kwargs={"pk": self.pk})  # URL to view the article details
 
-
-# Comment model to store comments on articles
-# class Comment(models.Model):
-#     article = models.ForeignKey('Article', on_delete=models.CASCADE)
-#     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Updated line
-#     text = models.TextField()
-#     created_at = models.DateTimeField(default=timezone.now) 
-
-#     def __str__(self):
-#         return self.comment  # String representation of the Comment model
-
-#     def get_absolute_url(self):
-#         return reverse("article_list")  # URL to redirect after submitting a comment
-
-
-
 class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -46,3 +29,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text  # Ensure this field exists and is correctly referenced
+    
+# class Image(models.Model):
+#     article = models.ForeignKey(Article, related_name='images', on_delete=models.CASCADE)
+#     image = models.ImageField(upload_to='images/')

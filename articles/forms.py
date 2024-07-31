@@ -20,4 +20,3 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'text': forms.TextInput(attrs={'placeholder': 'Add a comment'})  
         }
-

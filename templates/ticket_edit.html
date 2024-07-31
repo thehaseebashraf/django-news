@@ -1,6 +1,5 @@
 {# Extend the base template for consistent layout #}
 {% extends "base.html" %}
-{# Load crispy forms template tags for enhanced form styling #}
 {% load crispy_forms_tags %}
 
 {# Set the title block for the edit ticket page #}
@@ -9,11 +8,32 @@
 {% block content %}
 <h1 style="font-size: 28px; color: #545454;">Edit ticket</h1>
 {# Form to edit an existing ticket #}
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
   {# CSRF token for security #}
   {% csrf_token %}
   {# Render the form with crispy forms for improved styling #}
   {{ form|crispy }}
+  
+  <!-- {# Display the existing image if it exists #}
+  {% if object.image %}
+    <div class="form-group">
+      <label for="existing_image">Existing Image:</label>
+      <div>
+        <img src="{{ object.image.url }}" class="img-thumbnail" alt="...">
+      </div>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="delete_image" value="true">
+        <label class="form-check-label">Delete</label>
+      </div>
+    </div>
+  {% endif %}
+   -->
+  <!-- {# Input to upload a new image #}
+  <div class="form-group">
+    <label for="new_image">Upload New Image:</label>
+    <input type="file" name="image" id="new_image" class="form-control">
+  </div>
+   -->
   {# Submit button to update the ticket #}
   <button class="btn update-btn ml-2" style="background-color: #a192bf; color: #ffffff; border-color: #a192bf;" type="submit">Update Ticket</button>
 </form>
