@@ -5,17 +5,39 @@
 
 {% block content %}
 <!-- Display heading for login -->
-<h2>Log In</h2>
+<h2 style=" font-size: 28px; color: #545454; ">Log In</h2>
 
 <!-- Form for user login -->
 <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
     <!-- Submit button for logging in -->
-    <button class="btn btn-success ml-2" type="submit">Log In</button>
+    <button class="btn ml-2 login-btn" type="submit" style="background-color: #a192bf; color: #ffffff; border-color: #a192bf;">
+        Log In
+    </button>
 </form>
 
 <!-- Link to password reset page -->
- <br>
-<p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+<br>
+<p><a href="{% url 'password_reset' %}" >Forgot your password?</a></p>
+
+<style>
+    /* Style for the button hover state */
+    .login-btn:hover {
+        background-color: #664c89 !important;
+        border-color: #664c89 !important;
+    }
+
+    /* Style for the input fields */
+    input[type="text"], input[type="password"] {
+
+    }
+
+    /* Style for the input fields when focused */
+    input[type="text"]:focus, input[type="password"]:focus {
+
+        border-color: #a192bf;
+        box-shadow: none;
+    }
+</style>
 {% endblock content %}

@@ -6,7 +6,25 @@
 <p>Are you sure you want to delete {{ object.username }}?</p>
 <form method="post">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Delete</button>
-    <a href="{% url 'user_list' %}" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn status-badge" style="color: #ffffff;">Delete</button>
+    <a href="{% url 'user_list' %}" class="btn confirm-btn" style="background-color: #a192bf; color: #ffffff; border-color: #a192bf;" >Cancel</a>
 </form>
+
+<style>
+    /* Style for the button hover state */
+    .confirm-btn:hover {
+        background-color: #664c89 !important;
+        border-color: #664c89 !important;
+    }
+
+    .status-badge {
+        background-color: #d9c690 !important;
+        border-color: #d9c690 !important;
+        color: #ffffff;
+        padding: 0.4rem;
+      }
+  
+  
+  </style>
+
 {% endblock %}

@@ -5,16 +5,39 @@
 {% block title %}Sign Up{% endblock title %}
 
 {% block content %}
-<h2>Sign Up</h2>
+<h2 style="font-size: 28px; color: #545454;">Sign Up</h2>
 <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
     <div id="username-feedback" class="invalid-feedback"></div>
     <div id="email-feedback" class="invalid-feedback"></div>
-    <button class="btn btn-success ml-2" type="submit">Sign Up</button>
+    <button class="btn signup-btn ml-2" type="submit"  style="background-color: #a192bf; color: #ffffff; border-color: #a192bf;">Sign Up</button>
 </form>
 {% endblock %}
 
 {% block extra_js %}
 <script src="{% static 'js/signup.js' %}"></script>
+
+<style>
+    /* Style for the button hover state */
+    .signup-btn:hover {
+        background-color: #664c89 !important;
+        border-color: #664c89 !important;
+    }
+
+    /* Style for the input fields */
+    input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
+
+        font-size: 14px;
+        color: #545454;
+        border: 1px solid #ced4da;
+    }
+
+    /* Style for the input fields when focused */
+    input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus {
+
+        border-color: #a192bf;
+        box-shadow: none;
+    }
+</style>
 {% endblock %}

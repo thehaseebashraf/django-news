@@ -9,21 +9,21 @@
   <!-- Conditional block to check if the user is logged in -->
   {% if user.is_authenticated %}
     <!-- Display a personalized welcome message for authenticated users -->
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-success" role="alert" style="background: linear-gradient(to right, #f8f2c7, #e1d9f2); color: #454647; border-color: #f8f2c7; height: 200px;">
       <h4 class="alert-heading">Hello again, {{ user.username }}!</h4>
       <p>We're glad to have you back.</p>
       <hr>
       <p class="mb-0">
         <!-- Button linking to the article list page -->
-        <a class="btn btn-primary" href="{% url 'article_list' %}" role="button">Browse all tickets</a>
+        <a class="btn browse-btn " href="{% url 'article_list' %}" role="button" style="background-color: #a192bf; color: #ffffff; border-color: #a192bf;">Browse all tickets</a>
       </p>
     </div>
   {% else %}
     <!-- Display a message for visitors who are not logged in -->
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info" role="alert" style="background: linear-gradient(to right, #f8f2c7, #e1d9f2); color: #454647; border-color: #f8f2c7; height: 200px;">
       <h4 class="alert-heading">Welcome to the Helpdesk Portal!</h4>
-      <p>Log in or register to make use of our services.</p>
-      <hr>
+      <p style=" margin-top: 20px; font-size: 14px; ">Log in or register to make use of our services.</p>
+      <hr style=" margin-top: 26px;">
       <!-- <p class="mb-0">
         Buttons for logging in and signing up
         <a class="btn btn-primary" href="{% url 'login' %}" role="button">Sign In</a>
@@ -32,19 +32,14 @@
     </div>
   {% endif %}
 </div>
-{% endblock content %}
 
-<!-- {% block extra_js %}
-<script>
-  // Ensure the script only runs if the user is authenticated
-  if ({{ user.is_authenticated|yesno:"true,false" }}) {
-    // Push a new state to the history stack
-    window.history.pushState(null, "", window.location.href);        
-    // Listen for the popstate event
-    window.onpopstate = function() {
-      // Push the same state to the history stack to prevent going back
-      window.history.pushState(null, "", window.location.href);
-    };
+<style>
+  /* Style for the button hover state */
+  .browse-btn:hover {
+      background-color: #664c89 !important;
+      border-color: #664c89 !important;
   }
-</script>
-{% endblock %} -->
+
+
+</style>
+{% endblock content %}

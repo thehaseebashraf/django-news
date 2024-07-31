@@ -7,7 +7,7 @@
 {% block title %}Edit Ticket{% endblock title %}
 
 {% block content %}
-<h1>Edit ticket</h1>
+<h1 style="font-size: 28px; color: #545454;">Edit ticket</h1>
 {# Form to edit an existing ticket #}
 <form action="" method="post">
   {# CSRF token for security #}
@@ -15,6 +15,28 @@
   {# Render the form with crispy forms for improved styling #}
   {{ form|crispy }}
   {# Submit button to update the ticket #}
-  <button class="btn btn-info ml-2" type="submit">Update Ticket</button>
+  <button class="btn update-btn ml-2" style="background-color: #a192bf; color: #ffffff; border-color: #a192bf;" type="submit">Update Ticket</button>
 </form>
+
+<style>
+  /* Style for the button hover state */
+  .update-btn:hover {
+      background-color: #664c89 !important;
+      border-color: #664c89 !important;
+  }
+
+  /* Style for the input and textarea fields */
+  input[type="text"], textarea {
+    font-size: 14px;
+    color: #545454;
+    border: 1px solid #ced4da;
+  }
+
+  /* Style for the input and textarea fields when focused */
+  input[type="text"]:focus, textarea:focus {
+    border-color: #a192bf;
+    box-shadow: none;
+  }
+</style>
+
 {% endblock content %}

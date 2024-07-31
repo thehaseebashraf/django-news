@@ -1,16 +1,17 @@
 {# Extend the base template #}
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {# Set the title block for the articles page #}
 {% block title %}Articles{% endblock title %}
 
 {% block content %}
-<div class="ticket-counter mb-3">
-  <h4>Total Tickets: {{ ticket_count }}</h4>
+<div class="ticket-counter mb-3" style=" font-size: 22px; color: #545454;">
+  <h4  >Total Tickets: {{ ticket_count }}</h4>
 </div>
 
-<div class="table-responsive">
-  <table class="table table-hover w-100">
+<div class="table-responsive" style="margin-top:32px;">
+  <table class="table table-hover w-70 mx-auto">
     <thead>
       <tr>
         <th>Requester</th>
@@ -20,12 +21,15 @@
         <th>Date</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="article-list" >
       {# Loop through each article in the article_list #}
       {% for article in article_list %}
-      <tr onclick="location.href='{{ article.get_absolute_url }}'" style="cursor: pointer;">
+      <tr onclick="location.href='{{ article.get_absolute_url }}'" style="cursor: pointer; height: 20px;">
         <td>
           <div class="d-flex align-items-center">
+            <div class="circle-initials" style="background-color: #a192bf; color: #ffffff;">
+              {{ article.author }}
+            </div>
             <div class="ms-3">
               <div>{{ article.author }}</div>
             </div>
@@ -34,7 +38,7 @@
         <td>{{ article.title }}</td>
         <td>{{ article.description|truncatewords:10 }}</td>
         <td>
-          <span class="badge bg-primary">Open</span>
+          <span class="badge bg-primary status-badge">Open</span>
         </td>
         <td>{{ article.date }}</td>
       </tr>
@@ -46,10 +50,31 @@
 <style>
   .table {
     width: 100%;
+    margin: auto;
   }
-  .table th, .table td {
-    padding: 1.5rem;
+  .table th {
+    font-size: 16px;
+    font-weight: bold;
+    color: #545454;
     text-align: left;
+    border-bottom: none;
+    position: relative;
+  }
+  .table th::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  .table td {
+    font-size: 14px;
+    color: #545454;
+    text-align: left;
+    padding: 1rem;
     border-top: none; /* Remove the top border */
     border-bottom: 1px solid #dee2e6; /* Add only horizontal borders */
   }
@@ -67,8 +92,36 @@
     margin-right: -15px;
   }
   tbody tr {
+    height: 20px;
     border-left: none; /* Remove the left border */
     border-right: none; /* Remove the right border */
   }
+  .circle-initials {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  .status-badge {
+    background-color: #d9c690 !important;
+    border-color: #d9c690 !important;
+    color: #ffffff;
+    padding: 0.5rem;
+  }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var initialsElements = document.querySelectorAll(".circle-initials");
+    initialsElements.forEach(function(element) {
+      var authorName = element.textContent.trim();
+      var initials = authorName.charAt(0).toUpperCase();
+      element.textContent = initials;
+    });
+  });
+</script>
 {% endblock content %}

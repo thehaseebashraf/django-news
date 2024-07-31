@@ -3,13 +3,24 @@
 {% block title %}Delete Ticket{% endblock title %}
 
 {% block content %}
-<h1>Delete Ticket</h1>
+<h1 style="font-size: 30px; color: #545454;">Delete Ticket</h1>
 {# Form to confirm deletion of the article #}
 <form action="" method="post">
   {# CSRF token for security #}
   {% csrf_token %}
   <p>Are you sure you want to delete "{{ article.title }}"?</p>
   {# Button to confirm deletion #}
-  <button class="btn btn-danger ml-2" type="submit">Confirm Delete</button>
+  <button class="btn delete-btn ml-2" style="background-color: #a192bf; color: #ffffff; border-color: #a192bf;" type="submit">Confirm Delete</button>
 </form>
+<style>
+  /* Style for the button hover state */
+  .delete-btn:hover {
+      background-color: #664c89 !important;
+      border-color: #664c89 !important;
+  }
+
+
+</style>
+
+
 {% endblock content %}

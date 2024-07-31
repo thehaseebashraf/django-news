@@ -11,17 +11,20 @@
   <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 </head>
 <body>
-  <header class="p-3 mb-3 border-bottom bg-light">
+  <header class="p-3 mb-3 ml-3 border-bottom bg-light">
     <div class="container-fluid">
       <div class="d-flex flex-wrap align-items-center justify-content-between">
-        <a class="navbar-brand" href="{% url 'home' %}">Helpline</a>
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <a class="navbar-brand gradient-text" href="{% url 'home' %}" style="font-size: 30px;" >Helpline</a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 mb-md-0 ms-4">
           {% if user.is_authenticated %}
-            <li><a href="{% url 'article_new' %}" class="btn btn-outline-primary nav-link-spacing">Create New Ticket</a></li>
+            <li><a href="{% url 'article_new' %}" class="btn btn-light-purple nav-link-spacing"  style=" color: #ffffff;">Create New Ticket</a></li>
             {% if user.is_admin %}
-              <li><a href="{% url 'user_list' %}" class="btn btn-outline-primary nav-link-spacing">Manage Users</a></li>
+              <li><a href="{% url 'user_list' %}" class="btn btn-light-purple nav-link-spacing"  style="color: #ffffff;">Manage Users</a></li>
             {% endif %}
         </ul>
+        
+            
+        
         <div class="dropdown text-end">
           <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
             data-bs-toggle="dropdown" aria-expanded="false">
@@ -29,14 +32,20 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownUser1">
             <li><a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a></li>
-            <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+            <li>
+              <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-item">Log Out</button>
+              </form>
+              <a href="#" class="dropdown-item" onclick="document.getElementById('logout-form').submit();">Log Out</a>
+            </li>
           </ul>
         </div>
           {% else %}
         </ul>
         <div class="text-end">
-          <a href="{% url 'login' %}" class="btn btn-outline-primary me-2">Log In</a>
-          <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a>
+          <a href="{% url 'login' %}" class="btn btn-light-purple me-2" style="color: #ffffff;">Log In</a>
+          <a href="{% url 'signup' %}" class="btn btn-light-purple" style="color: #ffffff;">Sign Up</a>
         </div>
           {% endif %}
       </div>
@@ -55,4 +64,42 @@
   {% block extra_js %}
   {% endblock %}
 </body>
+<style>
+  .gradient-text {
+    background: linear-gradient(to right, #ffdd00, #8a2be2); /* Bright yellow to bright purple */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .gradient-text:hover {
+    transform: translateY(-2px); /* Lift effect on hover */
+  }
+  .btn-light-purple {
+    background-color: #cbbdea ; /* Light purple */
+    color: #ffffff;
+    border: 2px solid #cbbdea ; /* Darker purple border */
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    display: inline-block;
+    margin: 0.5rem 0;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+
+  .btn-light-purple:hover {
+    background-color: #d6a4ec; /* Slightly darker purple on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow on hover */
+  }
+
+  .btn-light-purple:active {
+    transform: translateY(1px); /* Pressed effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Weaker shadow when pressed */
+  }
+
+  .nav-link-spacing {
+    margin: 0 0.5rem;
+  }
+</style>
 </html>

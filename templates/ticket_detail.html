@@ -7,15 +7,15 @@
 <div class="article-entry">
   <div class="d-flex justify-content-between align-items-center">
     {# Display the article title, author, and date #}
-    <h2 class="mb-0">{{ object.title }}</h2>
+    <h2 class="mb-0" style="font-size: 30px; color: #545454;">{{ object.title }}</h2>
     
     {# Container for Edit and Delete buttons #}
     <div>
       {# Button to edit the article #}
-      <a href="{% url 'article_edit' object.pk %}" class="btn mt-5 btn-outline-secondary">Edit</a>
+      <a href="{% url 'article_edit' object.pk %}" class="btn mt-5 back-btn " style="background-color: #a192bf; color: #ffffff; border-color: #a192bf;">Edit</a>
       {# Conditional rendering of the delete button for admin users #}
       {% if user.is_authenticated and user.is_admin %}
-        <a href="{% url 'article_delete' object.pk %}" class="btn mt-5 btn-outline-danger ms-2">Delete</a>
+        <a href="{% url 'article_delete' object.pk %}" class="btn mt-5  status-badge ms-2" style="color: #ffffff;" >Delete</a>
       {% endif %}
     </div>
   </div>
@@ -52,12 +52,43 @@
     <input type="text" name="text" class="form-control me-2 mt-3" placeholder="Add your comment" value="{{ form.text.value|default_if_none:'' }}">
     
     {# Submit button to save the new comment #}
-    <button class="btn btn-success mt-3" type="submit">Save</button>
+    <button class="btn  mt-3 status-badge" style="color:#ffffff" type="submit">Save</button>
   </div>
 </form>
 
 <!-- Link to return to the list of all articles -->
 <div class="mt-4">
-  <a href="{% url 'article_list' %}" class="btn btn-primary mb-5">Back to All Tickets</a>
+  <a href="{% url 'article_list' %}" class="btn back-btn mb-5" style="background-color: #a192bf; color: #ffffff; border-color: #a192bf;">Back to All Tickets</a>
 </div>
+
+<style>
+  /* Style for the button hover state */
+  .back-btn:hover {
+      background-color: #664c89 !important;
+      border-color: #664c89 !important;
+  }
+
+
+
+  /* Style for the input fields */
+  input[type="text"] {
+    font-size: 14px;
+    color: #545454;
+    border: 1px solid #ced4da;
+  }
+
+  /* Style for the input fields when focused */
+  input[type="text"]:focus {
+    border-color: #a192bf;
+    box-shadow: none;
+  }
+
+  .status-badge {
+    background-color: #d9c690 !important;
+    border-color: #d9c690 !important;
+    color: #ffffff;
+    padding: 0.5rem;
+  }
+</style>
+
 {% endblock content %}

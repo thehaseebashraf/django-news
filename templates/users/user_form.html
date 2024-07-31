@@ -6,6 +6,14 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Save</button>
+    <button type="submit" class="btn status-badge" style="color:#ffffff">Save</button>
 </form>
+<style>
+.status-badge {
+    background-color: #d9c690 !important;
+    border-color: #d9c690 !important;
+    color: #ffffff;
+    padding: 0.5rem;
+  }
+</style>
 {% endblock %}
