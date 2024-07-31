@@ -14,17 +14,15 @@
   <header class="p-3 mb-3 ml-3 border-bottom bg-light">
     <div class="container-fluid">
       <div class="d-flex flex-wrap align-items-center justify-content-between">
-        <a class="navbar-brand gradient-text" href="{% url 'home' %}" style="font-size: 30px;" >Helpline</a>
+        <a class="navbar-brand gradient-text" href="{% url 'home' %}" style="font-size: 30px;">Helpline</a>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 mb-md-0 ms-4">
           {% if user.is_authenticated %}
-            <li><a href="{% url 'article_new' %}" class="btn btn-light-purple nav-link-spacing"  style=" color: #ffffff;">Create New Ticket</a></li>
+            <li><a href="{% url 'article_new' %}" class="btn btn-light-purple nav-link-spacing" style="color: #ffffff;">Create New Ticket</a></li>
             {% if user.is_admin %}
-              <li><a href="{% url 'user_list' %}" class="btn btn-light-purple nav-link-spacing"  style="color: #ffffff;">Manage Users</a></li>
+              <li><a href="{% url 'user_list' %}" class="btn btn-light-purple nav-link-spacing" style="color: #ffffff;">Manage Users</a></li>
             {% endif %}
         </ul>
-        
-            
-        
+
         <div class="dropdown text-end">
           <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
             data-bs-toggle="dropdown" aria-expanded="false">
@@ -74,9 +72,9 @@
     transform: translateY(-2px); /* Lift effect on hover */
   }
   .btn-light-purple {
-    background-color: #cbbdea ; /* Light purple */
+    background-color: #cbbdea; /* Light purple */
     color: #ffffff;
-    border: 2px solid #cbbdea ; /* Darker purple border */
+    border: 2px solid #cbbdea; /* Darker purple border */
     padding: 0.5rem 1rem;
     font-size: 1rem;
     text-align: center;
@@ -100,6 +98,16 @@
 
   .nav-link-spacing {
     margin: 0 0.5rem;
+  }
+
+  /* Dropdown menu item customization */
+  .dropdown-item {
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .dropdown-item:hover {
+    background-color: #cbbdea; /* Light purple on hover */
+    color: #ffffff; /* White text on hover */
   }
 </style>
 </html>
