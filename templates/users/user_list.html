@@ -85,7 +85,7 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     const checkboxes = document.querySelectorAll('.admin-checkbox');
     const modal = new bootstrap.Modal(document.getElementById('adminConfirmModal'));
     let selectedUserId = null;
@@ -93,47 +93,51 @@
     let isAdminAction = true;
 
     checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', function() {
-        selectedUserId = this.dataset.userId;
-        selectedUsername = this.dataset.username;
-        isAdminAction = this.checked;
-        document.getElementById('username').textContent = selectedUsername;
-        document.getElementById('adminAction').textContent = isAdminAction ? 'make' : 'remove admin rights for';
-        modal.show();
-      });
+        checkbox.addEventListener('change', function() {
+            selectedUserId = this.dataset.userId;
+            selectedUsername = this.dataset.username;
+            isAdminAction = this.checked;
+            document.getElementById('username').textContent = selectedUsername;
+            document.getElementById('adminAction').textContent = isAdminAction ? 'make' : 'remove admin rights for';
+            modal.show();
+        });
     });
 
     document.getElementById('confirmAdminButton').addEventListener('click', function() {
-      modal.hide();
-      fetch(`/accounts/users/${selectedUserId}/${isAdminAction ? 'make_admin' : 'remove_admin'}/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': '{{ csrf_token }}'
-        }
-      }).then(response => {
-        if (response.ok) {
-          location.reload();
-        } else {
-          // Handle error
-          alert('Failed to update admin rights');
-          document.querySelector(`.admin-checkbox[data-user-id="${selectedUserId}"]`).checked = !isAdminAction;
-        }
-      }).catch(() => {
-        // Handle error
-        alert('Failed to update admin rights');
-        document.querySelector(`.admin-checkbox[data-user-id="${selectedUserId}"]`).checked = !isAdminAction;
-      });
+        modal.hide();
+        fetch(`/accounts/users/${selectedUserId}/${isAdminAction ? 'make_admin' : 'remove_admin'}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        }).then(response => {
+            if (response.ok) {
+                if (!isAdminAction && selectedUserId === '{{ user.id }}') {
+                    // If the current user removed their own admin rights, log them out
+                    fetch("{% url 'logout' %}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        }
+                    }).then(() => {
+                        window.location.href = "{% url 'login' %}";
+                    });
+                } else {
+                    location.reload();
+                }
+            } else {
+                // Handle error
+                alert('Failed to update admin rights');
+                document.querySelector(`.admin-checkbox[data-user-id="${selectedUserId}"]`).checked = !isAdminAction;
+            }
+        }).catch(() => {
+            // Handle error
+            alert('Failed to update admin rights');
+            document.querySelector(`.admin-checkbox[data-user-id="${selectedUserId}"]`).checked = !isAdminAction;
+        });
     });
-  });
-  document.addEventListener("DOMContentLoaded", function() {
-    var initialsElements = document.querySelectorAll(".circle-initials");
-    initialsElements.forEach(function(element) {
-      var authorName = element.textContent.trim();
-      var initials = authorName.charAt(0).toUpperCase();
-      element.textContent = initials;
-    });
-  });
+});
 </script>
 
 

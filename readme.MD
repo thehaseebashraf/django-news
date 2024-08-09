@@ -27,7 +27,7 @@ Follow these steps to set up and run the project:
 ### 1. Run the following commands
 
 - cd helpdesk
-- python -m venv venv
+- python3 -m venv venv
 - source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 - pip install -r requirements.txt
 - python manage.py migrate
