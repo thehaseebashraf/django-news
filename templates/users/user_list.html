@@ -84,10 +84,10 @@
   }
 </style>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
+<script>document.addEventListener('DOMContentLoaded', function() {
     const checkboxes = document.querySelectorAll('.admin-checkbox');
-    const modal = new bootstrap.Modal(document.getElementById('adminConfirmModal'));
+    const modalElement = document.getElementById('adminConfirmModal');
+    const modal = new bootstrap.Modal(modalElement);
     let selectedUserId = null;
     let selectedUsername = null;
     let isAdminAction = true;
@@ -103,8 +103,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    modalElement.addEventListener('hide.bs.modal', function() {
+        // Force a page refresh if the modal is closed without confirming
+        location.reload();
+    });
+
     document.getElementById('confirmAdminButton').addEventListener('click', function() {
-        modal.hide();
         fetch(`/accounts/users/${selectedUserId}/${isAdminAction ? 'make_admin' : 'remove_admin'}/`, {
             method: 'POST',
             headers: {
@@ -129,15 +133,18 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // Handle error
                 alert('Failed to update admin rights');
-                document.querySelector(`.admin-checkbox[data-user-id="${selectedUserId}"]`).checked = !isAdminAction;
+                location.reload(); // Refresh the page to revert changes
             }
         }).catch(() => {
             // Handle error
             alert('Failed to update admin rights');
-            document.querySelector(`.admin-checkbox[data-user-id="${selectedUserId}"]`).checked = !isAdminAction;
+            location.reload(); // Refresh the page to revert changes
+        }).finally(() => {
+            modal.hide();  // Ensure the modal is closed after the request
         });
     });
 });
+
 </script>
 
 
